@@ -6,7 +6,7 @@ const { getUsers, postNewUser } = require('../Controllers/userController')
 router.get('/', async (req, res, next) => {
   try {
     const users = await getUsers();
-    if(users.error) throw new Error(users.error)
+    if (users.error) throw new Error(users.error)
     return res.status(200).json(users)
   } catch (error) {
     return res.status(400).send(error)
@@ -15,15 +15,12 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-
     const newUser = await postNewUser(req.body);
-    if(newUser.error) throw new Error(newUser.error);
+    if (newUser.error) throw new Error(newUser.error);
     return res.status(201).json(newUser);
-
   } catch (error) {
     return res.status(400).send(error)
-    
   }
-})
+});
 
 module.exports = router;
