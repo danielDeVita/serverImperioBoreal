@@ -22,4 +22,16 @@ const postNewUser = async (user) => {
     }
 }
 
-module.exports = { getUsers, postNewUser }
+const getUserById = async (id) => {
+    try {
+        const foundUser = await User.findById(id);
+
+        if(!foundUser) throw new Error('No hay usuarios con ese id');
+        return foundUser;
+
+    } catch (error) {
+        return error.message;
+    }
+}
+
+module.exports = { getUsers, postNewUser, getUserById }
