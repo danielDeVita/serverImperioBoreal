@@ -40,7 +40,15 @@ const updateProduct = async (id, descriptionName, category, price, priceBusiness
         return error.message;
     }
 }
+const deleteProduct = async (id) => {
+    try {
+        const productToDelete = await Product.softDelete({ _id: id });
+        return productToDelete
+    } catch (error) {
+        return error.message;
+    }
+}
 
 
 
-module.exports = { getProducts, postNewProduct, getProductById }
+module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct }
