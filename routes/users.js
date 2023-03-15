@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const { getUsers, postNewUser, getUserById, updateUser, deleteUser } = require('../Controllers/userController')
 
 /* GET users listing. */
