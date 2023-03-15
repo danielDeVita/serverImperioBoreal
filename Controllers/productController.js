@@ -2,7 +2,7 @@ const Product = require('../models/Product')
 
 const getProducts = async() => {
     try {
-        const products = await product.find()
+        const products = await Product.find()
         if(!products.lenght)
         throw new Error("No se encontraron productos en la base de datos")
         return products;
@@ -11,6 +11,17 @@ const getProducts = async() => {
     }
 }
 
+const postNewProduct = async (product) => {
+    try {
+        if (!product.descriptionName || !product.category || !product.price || !product.priceBusiness || !product.priceVAT || !product.priceVATBusiness) throw new Error("Falta información acerca del producto");
+        const newProduct = new Product(product)
+        newProduct.save(newProduct)
+        return newProduct
+    } catch (error) {
+        return error.message;
+    }
+}
 
 
-module.exports = { getProducts }
+
+module.exports = { getProducts, postNewProduct }
