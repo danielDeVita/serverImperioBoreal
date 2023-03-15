@@ -23,4 +23,14 @@ router.post('/', async(req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const foundProduct = await Product(req.params.id);
+    if (foundProduct.error) throw new Error(foundProduct.error)
+    return res.status(200).json(foundProduct);
+  } catch (error) {
+    return res.status(404).send(error.message)
+  }
+});
+
 module.exports = router;
