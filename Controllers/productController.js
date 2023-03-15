@@ -32,6 +32,14 @@ const getProductById = async (id) => {
     }
 }
 
+const updateProduct = async (id, descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness) => {
+    try {
+        const productToUpdate = await User.findByIdAndUpdate(id, { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness, }, { new: true })
+        return productToUpdate
+    } catch (error) {
+        return error.message;
+    }
+}
 const deleteProduct = async (id) => {
     try {
         const productToDelete = await Product.softDelete({ _id: id });
@@ -43,4 +51,4 @@ const deleteProduct = async (id) => {
 
 
 
-module.exports = { getProducts, postNewProduct, getProductById, deleteProduct }
+module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct }
