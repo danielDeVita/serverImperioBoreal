@@ -8,7 +8,7 @@ const CLUSTER = process.env.CLUSTER
 
 module.exports = async function connect() {
     try {
-        await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER}.mongodb.net/test`, {
+        await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER}.mongodb.net/ImperioBoreal`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
