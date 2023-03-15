@@ -32,6 +32,15 @@ const getProductById = async (id) => {
     }
 }
 
+const deleteProduct = async (id) => {
+    try {
+        const productToDelete = await Product.softDelete({ _id: id });
+        return productToDelete
+    } catch (error) {
+        return error.message;
+    }
+}
 
 
-module.exports = { getProducts, postNewProduct, getProductById }
+
+module.exports = { getProducts, postNewProduct, getProductById, deleteProduct }

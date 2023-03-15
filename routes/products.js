@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { getProducts, postNewProduct, getProductById } = require('../Controllers/productController')
+const { getProducts, postNewProduct, getProductById, deleteProduct } = require('../Controllers/productController')
 
 /* GET home page. */
 router.get('/', async(req, res, next) => {
@@ -32,5 +32,15 @@ router.get('/:id', async (req, res, next) => {
     return res.status(404).send(error.message)
   }
 });
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const productToDelete = await deleteProduct(id)
+    return res.status(200).json(productToDelete)
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+})
 
 module.exports = router;
