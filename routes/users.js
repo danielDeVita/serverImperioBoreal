@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { getUsers, postNewUser, getUserById, updateUser } = require('../Controllers/userController')
+const { getUsers, postNewUser, getUserById, updateUser, deleteUser } = require('../Controllers/userController')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -44,5 +44,15 @@ router.put('/:id', async (req, res, next) => {
     return res.status(400).send(error);
   }
 });
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userToDelete = await deleteUser(id)
+    return res.status(200).json(userToDelete)
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+})
 
 module.exports = router;

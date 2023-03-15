@@ -41,4 +41,13 @@ const updateUser = async (id, first_name, password, email) => {
     }
 }
 
-module.exports = { getUsers, postNewUser, getUserById, updateUser }
+const deleteUser = async (id) => {
+    try {
+        const userToDelete = await User.softDelete({ _id: id });
+        return userToDelete
+    } catch (error) {
+        return error.message;
+    }
+}
+
+module.exports = { getUsers, postNewUser, getUserById, updateUser, deleteUser }
