@@ -34,7 +34,7 @@ const getProductById = async (id) => {
 
 const updateProduct = async (id, descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness) => {
     try {
-        const productToUpdate = await User.findByIdAndUpdate(id, { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness, }, { new: true })
+        const productToUpdate = await Product.findByIdAndUpdate(id, { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness, }, { new: true })
         return productToUpdate
     } catch (error) {
         return error.message;
