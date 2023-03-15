@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { getProducts, postNewProduct } = require('../Controllers/productController')
+const { getProducts, postNewProduct, getProductById } = require('../Controllers/productController')
 
 /* GET home page. */
 router.get('/', async(req, res, next) => {
@@ -25,7 +25,7 @@ router.post('/', async(req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const foundProduct = await Product(req.params.id);
+    const foundProduct = await getProductById(req.params.id);
     if (foundProduct.error) throw new Error(foundProduct.error)
     return res.status(200).json(foundProduct);
   } catch (error) {
