@@ -22,6 +22,16 @@ const postNewProduct = async (product) => {
     }
 }
 
+const getProductById = async (id) => {
+    try {
+        const foundProduct = await Product.findById(id);
+        if (!foundProduct) throw new Error('No hay producto con ese id');
+        return foundProduct;
+    } catch (error) {
+        return error.message;
+    }
+}
 
 
-module.exports = { getProducts, postNewProduct }
+
+module.exports = { getProducts, postNewProduct, getProductById }
