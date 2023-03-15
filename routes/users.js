@@ -15,16 +15,13 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const { _id } = req.params
-    const foundUser = await getUserById(_id);
-    if(foundUser.error) throw new Error(foundUser.error)
-
+    const foundUser = await getUserById(req.params.id);
+    if (foundUser.error) throw new Error(foundUser.error)
     return res.status(200).json(foundUser);
-
   } catch (error) {
     return res.status(404).send(error.message)
   }
-})
+});
 
 router.post('/', async (req, res, next) => {
   try {

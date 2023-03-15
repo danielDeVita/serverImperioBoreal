@@ -25,10 +25,8 @@ const postNewUser = async (user) => {
 const getUserById = async (id) => {
     try {
         const foundUser = await User.findById(id);
-
-        if(!foundUser) throw new Error('No hay usuarios con ese id');
+        if (!foundUser) throw new Error('No hay usuarios con ese id');
         return foundUser;
-
     } catch (error) {
         return error.message;
     }
