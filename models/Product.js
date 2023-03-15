@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const productSchema = new Schema({
     descriptionName: String,
@@ -9,6 +10,8 @@ const productSchema = new Schema({
     priceVAT: Number,
     priceVATBusiness: Number,
 });
+
+productSchema.plugin(softDeletePlugin);
 
 const Product = mongoose.model('Product', productSchema);
 
