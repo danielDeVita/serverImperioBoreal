@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { getUsers, postNewUser, getUserById } = require('../Controllers/userController')
+const { getUsers, postNewUser, getUserById, updateUser } = require('../Controllers/userController')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -30,6 +30,18 @@ router.post('/', async (req, res, next) => {
     return res.status(201).json(newUser);
   } catch (error) {
     return res.status(400).send(error)
+  }
+});
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { first_name, password, email } = req.body
+    const userToUpdate = await updateUser(id, first_name, password, email);
+    if (userToUpdate.error) throw new Error(userToUpdate.error);
+    return res.status(201).json(userToUpdate);
+  } catch (error) {
+    return res.status(400).send(error);
   }
 });
 
