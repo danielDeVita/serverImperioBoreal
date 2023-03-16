@@ -49,6 +49,16 @@ const deleteProduct = async (id) => {
     }
 }
 
+const getProductByName = async (name) => {
+    try {
+        const responseDB = await Product.findOne({descriptionName: name});
+        if (!responseDB) throw new Error("No se encontro el producto buscado");
+        return responseDB
+    } catch (error) {
+        return error.message;
+    }
+};
 
 
-module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct }
+
+module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct, getProductByName }
