@@ -1,13 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct} = require('../Controllers/productController')
+const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName} = require('../Controllers/productController')
 
 /* GET home page. */
 router.get('/', async(req, res, next) => {
     try {
+      if(req.query.name){
+        const foundProduct = await getProductByName(req.query.name)
+        if(foundProduct.error) throw new Error(foundProduct.error)
+        return res.status(200).json(foundProduct)
+      } else {
       const products = await getProducts();
       if(products.error) throw new Error(products.error);
       return res.status(200).json(products)
+      }
     } catch (error) {
       return res.status(400).send(error);
     }
