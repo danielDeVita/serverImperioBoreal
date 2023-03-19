@@ -7,7 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('pf:server');
 const http = require('http');
-const connect = require('../dbConnection');
+const {connect} = require('../dbConnection');
 
 /**
  * Normalize a port into a number, string, or false.
