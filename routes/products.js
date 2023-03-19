@@ -1,26 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName} = require('../Controllers/productController')
+const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName } = require('../Controllers/productController')
+
+const path = require('path');
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../public/img/"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const uploadFile = multer({ storage });
 
 /* GET home page. */
-router.get('/', async(req, res, next) => {
-    try {
-      if(req.query.name){
-        const foundProduct = await getProductByName(req.query.name)
-        if(foundProduct.error) throw new Error(foundProduct.error)
-        return res.status(200).json(foundProduct)
-      } else {
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.query.name) {
+      const foundProduct = await getProductByName(req.query.name)
+      if (foundProduct.error) throw new Error(foundProduct.error)
+      return res.status(200).json(foundProduct)
+    } else {
       const products = await getProducts();
-      if(products.error) throw new Error(products.error);
+      if (products.error) throw new Error(products.error);
       return res.status(200).json(products)
-      }
-    } catch (error) {
-      return res.status(400).send(error);
     }
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
-router.post('/', async(req, res, next) => {
+router.post('/', uploadFile.single('productImg'), async (req, res, next) => {
   try {
+    //const fileName = path.basename(req.file.path);
+    console.log(req.file);
     const newProduct = await postNewProduct(req.body);
     if (newProduct.error) throw new Error(newProduct.error);
     return res.status(201).json(newProduct);

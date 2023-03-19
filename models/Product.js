@@ -9,6 +9,7 @@ const productSchema = new Schema({
     priceBusiness: Number,
     priceVAT: Number,
     priceVATBusiness: Number,
+    productImg: String
 });
 
 productSchema.plugin(softDeletePlugin);
