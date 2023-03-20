@@ -52,8 +52,9 @@ const updateProduct = async (id, descriptionName, category, price, priceBusiness
 }
 const deleteProduct = async (id) => {
     try {
+        const productToGetPublicID = await Product.findById(id)
         const productToDelete = await Product.softDelete({ _id: id });
-        await deleteImage(productToDelete.public_id);
+        await deleteImage(productToGetPublicID.image.public_id);
         return productToDelete
     } catch (error) {
         return error.message;
