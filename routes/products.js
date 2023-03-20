@@ -1,33 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName} = require('../Controllers/productController')
+const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName } = require('../Controllers/productController')
+const fileUpload = require('express-fileupload');
 
 /* GET home page. */
-router.get('/', async(req, res, next) => {
-    try {
-      if(req.query.name){
-        const foundProduct = await getProductByName(req.query.name)
-        if(foundProduct.error) throw new Error(foundProduct.error)
-        return res.status(200).json(foundProduct)
-      } else {
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.query.name) {
+      const foundProduct = await getProductByName(req.query.name)
+      if (foundProduct.error) throw new Error(foundProduct.error)
+      return res.status(200).json(foundProduct)
+    } else {
       const products = await getProducts();
-      if(products.error) throw new Error(products.error);
+      if (products.error) throw new Error(products.error);
       return res.status(200).json(products)
-      }
-    } catch (error) {
-      return res.status(400).send(error);
     }
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
-router.post('/', async(req, res, next) => {
+router.post('/', fileUpload({ useTempFiles: true, tempFileDir: './public/img' }), async (req, res, next) => {
   try {
-    const newProduct = await postNewProduct(req.body);
+    const newProduct = await postNewProduct(req.body, req.files.image.tempFilePath);
     if (newProduct.error) throw new Error(newProduct.error);
     return res.status(201).json(newProduct);
   } catch (error) {
     return res.status(400).send(error)
   }
-})
+});
 
 router.get('/:id', async (req, res, next) => {
   try {
