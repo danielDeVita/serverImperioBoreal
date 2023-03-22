@@ -3,11 +3,24 @@ const Schema = mongoose.Schema
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const userSchema = new Schema({
-    first_name: String,
-    password: String,
-    email: String,
-    isAdmin: Boolean,
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    name: {
+        type: String,
+    },
+    email: {
+        type: String,
+        unique: true,
+        
+    },
+    password: {
+        type: String,    
+    },
 });
+
 
 userSchema.plugin(softDeletePlugin);
 
