@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
+const cartRouter = require('./routes/carts');
 
 const app = express();
 
@@ -19,6 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
+app.use('/carts', cartRouter);
 
 module.exports = app;
-//hola soy una prueba
