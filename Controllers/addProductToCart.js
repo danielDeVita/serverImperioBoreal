@@ -1,9 +1,14 @@
 const Cart = require('../models/Cart');
 
-const addProductToCart = async (products) => {
-    const cart = new Cart(products)
-    await cart.save(cart)
-    return cart
-}
+const addProductToCart = async (cart) => {
+    try {
+        if (!cart.user || !cart.products) throw new Error("Falta información sobre la compra");
+        const newCart = new Cart(cart)
+        await newCart.save(newCart)
+        return newCart
+    } catch (error) {
+        return error.message;
+    }
+};
 
 module.exports = { addProductToCart }
