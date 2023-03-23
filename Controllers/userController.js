@@ -11,14 +11,18 @@ const getUsers = async () => {
     }
 }
 
-const postNewUser = async (user) => {
+const postNewUser = async (email) => {
     try {
-        if (!user.first_name || !user.password || !user.email) throw new Error("Falta información acerca del usuario");
-        const newUser = new User(user)
-        newUser.save(newUser)
+        const foundUser = await User.findOne({email})
+        if(foundUser) return foundUser;
+        const newUser =  new User({
+            email,
+            username: email
+        })
+        await newUser.save(newUser);
         return newUser
     } catch (error) {
-        return error.message;
+        return error
     }
 }
 
