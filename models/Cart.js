@@ -7,13 +7,17 @@ const cartSchema = new Schema({
         default: false
     },
     products: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
+        product: {
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
+        },
+        quantity: Number
     }],
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    totalAmount: Number
 });
 
 const Cart = mongoose.model('Cart', cartSchema);
