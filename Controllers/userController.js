@@ -13,9 +13,9 @@ const getUsers = async () => {
 
 const postNewUser = async (email) => {
     try {
-        const foundUser = await User.findOne({email})
-        if(foundUser) return foundUser;
-        const newUser =  new User({
+        const foundUser = await User.findOne({ email })
+        if (foundUser) return foundUser;
+        const newUser = new User({
             email,
             username: email
         })
@@ -30,6 +30,16 @@ const getUserById = async (id) => {
     try {
         const foundUser = await User.findById(id);
         if (!foundUser) throw new Error('No hay usuarios con ese id');
+        return foundUser;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const getUserByMail = async (email) => {
+    try {
+        const foundUser = await User.findOne({ email })
+        if (!foundUser) throw new Error('No hay usuarios con ese email');
         return foundUser;
     } catch (error) {
         return error.message;
@@ -54,4 +64,4 @@ const deleteUser = async (id) => {
     }
 }
 
-module.exports = { getUsers, postNewUser, getUserById, updateUser, deleteUser }
+module.exports = { getUsers, postNewUser, getUserById, getUserByMail, updateUser, deleteUser }
