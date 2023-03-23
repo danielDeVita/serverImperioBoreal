@@ -25,9 +25,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newUser = await postNewUser(req.body);
-    if (newUser.error) throw new Error(newUser.error);
-    return res.status(201).json(newUser);
+    const { email } = req.body
+    const newUser = await postNewUser(email);
+    return res.status(201).json(newUser)
   } catch (error) {
     return res.status(400).send(error)
   }
