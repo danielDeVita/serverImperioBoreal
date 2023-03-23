@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const { uploadImage, deleteImage } = require('../cloudinary');
 const Product = require('../models/Product')
+const Category = require('../models/Category')
 
 const getProducts = async () => {
     try {
@@ -14,9 +15,20 @@ const getProducts = async () => {
 }
 
 const postNewProduct = async (product, imgPath) => {
+    const { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness,} = product;
     try {
-        if (!product.descriptionName || !product.category || !product.price || !product.priceBusiness || !product.priceVAT || !product.priceVATBusiness) throw new Error("Falta información acerca del producto");
-        const newProduct = new Product(product)
+        let categoryObj = await Category.findOne({category})
+        if(!categoryObj) {
+            categoryObj = await Category.create({ category })            
+        }
+        const newProduct = new Product({
+            descriptionName: descriptionName,
+            categoryId: categoryObj._id,
+            price: price,
+            priceBusiness: priceBusiness,
+            priceVAT: priceVAT,
+            priceVATBusiness: priceVATBusiness,
+        })
         if (imgPath) {
             const result = await uploadImage(imgPath)
             newProduct.image = {
@@ -25,10 +37,11 @@ const postNewProduct = async (product, imgPath) => {
             }
             await fs.unlink(imgPath);
         }
-        await newProduct.save(newProduct)
-        return newProduct
+        const savedProduct = await newProduct.save()
+        return savedProduct
     } catch (error) {
-        return error.message;
+        console.log('estoy en el catch')
+       throw new Error(error.message)
     }
 }
 
@@ -71,6 +84,16 @@ const getProductByName = async (name) => {
     }
 };
 
+const getProductCategories = async () => {
+    try {
+        const allCategories = await Category.find({});
+        if (!allCategories) throw new Error ('No se encontraron categorías en la DB');
+        return allCategories;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
 
 
-module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct, getProductByName }
+
+module.exports = { getProducts, postNewProduct, getProductById, deleteProduct, updateProduct, getProductByName, getProductCategories }

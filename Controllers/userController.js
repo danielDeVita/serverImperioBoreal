@@ -19,8 +19,8 @@ const postNewUser = async (email) => {
             email,
             username: email
         })
-        await newUser.save(newUser);
-        return newUser
+        const savedUser = await newUser.save();
+        return savedUser
     } catch (error) {
         return error
     }
