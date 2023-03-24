@@ -36,7 +36,7 @@ router.post('/', fileUpload({ useTempFiles: true, tempFileDir: './public/img' })
     if(!descriptionName || !category || !price || !priceBusiness || !priceVAT || !priceVATBusiness) throw new Error('Falta información del producto!')
     // IMPORTANTISIMO SABER QUE ESTA PASANDO ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // SE MANDA UN ARRAY DE 2 {FOTOS} DESDE EL FORM Y THUNDER CLIENT MANDA UNA SOLA
-    const newProduct = await postNewProduct(req.body, req.files.image[0].tempFilePath);
+    const newProduct = await postNewProduct(req.body, req.files.image.tempFilePath);
     if (newProduct.error) throw new Error(newProduct.error);
     return res.status(201).json(newProduct);
   } catch (error) {
