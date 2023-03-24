@@ -10,8 +10,7 @@ router.get('/categories', async (req, res, next) => {
     const allCategories = await getProductCategories();
     res.status(200).json(allCategories)
   } catch (error) {
-    console.error(error)
-   return res.status(400).send(error); 
+    return res.status(400).send(error.message);
   }
 })
 router.get('/', async (req, res, next) => {
@@ -26,22 +25,17 @@ router.get('/', async (req, res, next) => {
       return res.status(200).json(products)
     }
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(400).send(error.message);
   }
 });
 
 router.post('/', fileUpload({ useTempFiles: true, tempFileDir: './public/img' }), async (req, res, next) => {
-  const { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness,} = req.body
   try {
-    if(!descriptionName || !category || !price || !priceBusiness || !priceVAT || !priceVATBusiness) throw new Error('Falta información del producto!')
-    // IMPORTANTISIMO SABER QUE ESTA PASANDO ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // SE MANDA UN ARRAY DE 2 {FOTOS} DESDE EL FORM Y THUNDER CLIENT MANDA UNA SOLA
     const newProduct = await postNewProduct(req.body, req.files.image.tempFilePath);
     if (newProduct.error) throw new Error(newProduct.error);
     return res.status(201).json(newProduct);
   } catch (error) {
-    console.log(error)
-    return res.status(400).send(error)
+    return res.status(400).send(error.message)
   }
 });
 
@@ -63,7 +57,7 @@ router.put('/:id', async (req, res, next) => {
     if (productToUpdate.error) throw new Error(productToUpdate.error);
     return res.status(201).json(productToUpdate);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(400).send(error.message);
   }
 });
 
@@ -73,7 +67,7 @@ router.delete('/:id', async (req, res, next) => {
     const productToDelete = await deleteProduct(id)
     return res.status(200).json(productToDelete)
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(400).send(error.message);
   }
 })
 

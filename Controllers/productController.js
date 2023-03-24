@@ -17,13 +17,14 @@ const getProducts = async () => {
 const postNewProduct = async (product, imgPath) => {
     const { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness,} = product;
     try {
+        if(!descriptionName || !category || !price || !priceBusiness || !priceVAT || !priceVATBusiness) throw new Error('Falta información del producto!')
         let categoryObj = await Category.findOne({category})
         if(!categoryObj) {
             categoryObj = await Category.create({ category })            
         }
         const newProduct = new Product({
             descriptionName: descriptionName,
-            categoryId: categoryObj._id,
+            category: categoryObj._id,
             price: price,
             priceBusiness: priceBusiness,
             priceVAT: priceVAT,
