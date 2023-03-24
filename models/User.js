@@ -22,7 +22,6 @@ const userSchema = new Schema({
     }
 });
 
-
 userSchema.plugin(softDeletePlugin);
 
 const User = mongoose.model('User', userSchema);

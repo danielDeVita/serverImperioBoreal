@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const productSchema = new Schema({
-    descriptionName:{
+    descriptionName: {
         type: String,
         required: true
     },
@@ -15,22 +15,11 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    priceBusiness:{
-        type: Number,
-        required: true,
-    }, 
-    priceVAT: {
-        type: Number,
-        required: true,
-    },
-    priceVATBusiness: {
-        type: Number,
-        required: true,
-    },
     image: {
         public_id: String,
         secure_url: String
-    }
+    },
+    stock: Number
 });
 
 productSchema.plugin(softDeletePlugin);
@@ -38,4 +27,3 @@ productSchema.plugin(softDeletePlugin);
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;
-

@@ -23,7 +23,7 @@ router.get("/:email", async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/id/:id', async (req, res, next) => {
   try {
     const foundUser = await getUserById(req.params.id);
     if (foundUser.error) throw new Error(foundUser.error)
@@ -46,8 +46,8 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { first_name, password, email } = req.body
-    const userToUpdate = await updateUser(id, first_name, password, email);
+    const { username, password, email } = req.body
+    const userToUpdate = await updateUser(id, username, password, email);
     if (userToUpdate.error) throw new Error(userToUpdate.error);
     return res.status(201).json(userToUpdate);
   } catch (error) {

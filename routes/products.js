@@ -12,7 +12,8 @@ router.get('/categories', async (req, res, next) => {
   } catch (error) {
     return res.status(400).send(error.message);
   }
-})
+});
+
 router.get('/', async (req, res, next) => {
   try {
     if (req.query.name) {
@@ -52,8 +53,8 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness } = req.body
-    const productToUpdate = await updateProduct(id, descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness);
+    const { descriptionName, category, price } = req.body
+    const productToUpdate = await updateProduct(id, descriptionName, category, price);
     if (productToUpdate.error) throw new Error(productToUpdate.error);
     return res.status(201).json(productToUpdate);
   } catch (error) {

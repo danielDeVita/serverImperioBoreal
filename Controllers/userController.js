@@ -1,6 +1,5 @@
 const User = require('../models/User')
 
-
 const getUsers = async () => {
     try {
         const users = await User.find()
@@ -46,9 +45,9 @@ const getUserByMail = async (email) => {
     }
 }
 
-const updateUser = async (id, first_name, password, email) => {
+const updateUser = async (id, username, password, email) => {
     try {
-        const userToUpdate = await User.findByIdAndUpdate(id, { first_name, password, email, }, { new: true })
+        const userToUpdate = await User.findByIdAndUpdate(id, { username, password, email }, { new: true })
         return userToUpdate
     } catch (error) {
         return error.message;
