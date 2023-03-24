@@ -6,7 +6,6 @@ const fileUpload = require('express-fileupload');
 /* GET home page. */
 
 router.get('/categories', async (req, res, next) => {
-  console.log('hola lucho')
   try {
     const allCategories = await getProductCategories();
     res.status(200).json(allCategories)
@@ -16,7 +15,6 @@ router.get('/categories', async (req, res, next) => {
   }
 })
 router.get('/', async (req, res, next) => {
-  console.log('hola dani')
   try {
     if (req.query.name) {
       const foundProduct = await getProductByName(req.query.name)
@@ -36,7 +34,9 @@ router.post('/', fileUpload({ useTempFiles: true, tempFileDir: './public/img' })
   const { descriptionName, category, price, priceBusiness, priceVAT, priceVATBusiness,} = req.body
   try {
     if(!descriptionName || !category || !price || !priceBusiness || !priceVAT || !priceVATBusiness) throw new Error('Falta información del producto!')
-    const newProduct = await postNewProduct(req.body, req.files.image.tempFilePath);
+    // IMPORTANTISIMO SABER QUE ESTA PASANDO ACA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // SE MANDA UN ARRAY DE 2 {FOTOS} DESDE EL FORM Y THUNDER CLIENT MANDA UNA SOLA
+    const newProduct = await postNewProduct(req.body, req.files.image[0].tempFilePath);
     if (newProduct.error) throw new Error(newProduct.error);
     return res.status(201).json(newProduct);
   } catch (error) {
