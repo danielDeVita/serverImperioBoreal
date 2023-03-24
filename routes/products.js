@@ -57,7 +57,18 @@ router.get('/:id', async (req, res, next) => {
   try {
     const foundProduct = await getProductById(req.params.id);
     if (foundProduct.error) throw new Error(foundProduct.error)
-    return res.status(200).json(foundProduct);
+    const serialaizer = {
+      image: foundProduct.image,
+      _id: foundProduct._id,
+      descriptionName: foundProduct.descriptionName,
+      category: {
+        _id: foundProduct.category._id,
+        categoryName: foundProduct.category.category
+      },
+      price: foundProduct.price
+
+   }
+    return res.status(200).json(serialaizer);
   } catch (error) {
     return res.status(404).send(error.message)
   }
