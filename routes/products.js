@@ -23,7 +23,20 @@ router.get('/', async (req, res, next) => {
     } else {
       const products = await getProducts();
       if (products.error) throw new Error(products.error);
-      return res.status(200).json(products)
+      const serialaizerProducts = products?.map((item) => (
+        {
+           image: item.image,
+           _id: item._id,
+           descriptionName: item.descriptionName,
+           category: {
+             _id: item.category._id,
+             categoryName: item.category.category
+           },
+           price: item.price
+  
+        }
+      )) 
+      return res.status(200).json(serialaizerProducts)
     }
   } catch (error) {
     return res.status(400).send(error.message);
