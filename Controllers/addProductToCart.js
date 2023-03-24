@@ -1,4 +1,5 @@
 const Cart = require('../models/Cart');
+const Order = require('../models/Cart');
 
 const addProductToCart = async (cart) => {
     try {
@@ -11,4 +12,14 @@ const addProductToCart = async (cart) => {
     }
 };
 
-module.exports = { addProductToCart }
+const addNewOrder = async (cart) => {
+    try {
+        const newOrder = new Order(cart)
+        await newOrder.save(newOrder)
+        return newOrder
+    } catch (error) {
+        return error.message;
+    }
+}
+
+module.exports = { addProductToCart, addNewOrder }
