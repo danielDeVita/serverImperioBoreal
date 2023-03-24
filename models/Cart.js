@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const cartSchema = new Schema({
-    paid: {
-        type: Boolean,
-        default: false
-    },
     products: [{
         product: {
             type: Schema.Types.ObjectId,
