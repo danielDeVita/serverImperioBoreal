@@ -40,7 +40,6 @@ const postNewProduct = async (product, imgPath) => {
         const savedProduct = await newProduct.save()
         return savedProduct
     } catch (error) {
-        console.log('estoy en el catch')
        throw new Error(error.message)
     }
 }
