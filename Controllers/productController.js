@@ -15,9 +15,9 @@ const getProducts = async () => {
 }
 
 const postNewProduct = async (product, imgPath) => {
-    const { descriptionName, category, price } = product;
+    const { descriptionName, category, price, stock } = product;
     try {
-        if (!descriptionName || !category || !price) throw new Error('Falta información del producto!')
+        if (!descriptionName || !category || !price || !stock) throw new Error('Falta información del producto!')
         let categoryObj = await Category.findOne({ category })
         if (!categoryObj) {
             categoryObj = await Category.create({ category })
@@ -25,7 +25,8 @@ const postNewProduct = async (product, imgPath) => {
         const newProduct = new Product({
             descriptionName,
             category: categoryObj._id,
-            price
+            price,
+            stock
         })
         if (imgPath) {
             const result = await uploadImage(imgPath)
