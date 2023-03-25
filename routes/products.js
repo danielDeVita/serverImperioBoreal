@@ -22,6 +22,7 @@ router.get('/', async (req, res, next) => {
       return res.status(200).json(foundProduct)
     } else {
       const products = await getProducts();
+      console.log(products)
       if (products.error) throw new Error(products.error);
       const serialaizerProducts = products?.map((item) => (
         {
@@ -32,8 +33,8 @@ router.get('/', async (req, res, next) => {
              _id: item.category._id,
              categoryName: item.category.category
            },
-           price: item.price
-  
+           price: item.price,
+           stock: item.stock
         }
       )) 
       return res.status(200).json(serialaizerProducts)
