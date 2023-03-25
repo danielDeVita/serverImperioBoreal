@@ -45,6 +45,7 @@ const postNewProduct = async (product, imgPath) => {
 }
 
 const getProductById = async (id) => {
+    
     try {
         const foundProduct = await Product.findById(id).populate('category');
         if (!foundProduct) throw new Error('No hay producto con ese id');
@@ -56,7 +57,7 @@ const getProductById = async (id) => {
 
 const updateProduct = async (id, descriptionName, category, price, stock) => {
     try {
-        const productToUpdate = await Product.findByIdAndUpdate(id, { descriptionName, category, price, stock }, { new: true })
+        const productToUpdate = await Product.findByIdAndUpdate(id, { descriptionName, category, price, stock}, { new: true }).populate('category')
         return productToUpdate
     } catch (error) {
         return error.message;
