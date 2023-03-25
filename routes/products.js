@@ -22,7 +22,6 @@ router.get('/', async (req, res, next) => {
       return res.status(200).json(foundProduct)
     } else {
       const products = await getProducts();
-      console.log(products)
       if (products.error) throw new Error(products.error);
       const serialaizerProducts = products?.map((item) => (
         {
@@ -78,8 +77,8 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { descriptionName, category, price } = req.body
-    const productToUpdate = await updateProduct(id, descriptionName, category, price);
+    const { descriptionName, category, price, stock } = req.body
+    const productToUpdate = await updateProduct(id, descriptionName, category, price, stock);
     if (productToUpdate.error) throw new Error(productToUpdate.error);
     return res.status(201).json(productToUpdate);
   } catch (error) {
