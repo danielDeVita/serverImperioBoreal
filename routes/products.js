@@ -25,17 +25,17 @@ router.get('/', async (req, res, next) => {
       if (products.error) throw new Error(products.error);
       const serialaizerProducts = products?.map((item) => (
         {
-           image: item.image,
-           _id: item._id,
-           descriptionName: item.descriptionName,
-           category: {
-             _id: item?.category?._id,
-             categoryName: item.category.category
-           },
-           price: item.price,
-           stock: item.stock
+          image: item.image,
+          _id: item._id,
+          descriptionName: item.descriptionName,
+          category: {
+            _id: item?.category?._id,
+            categoryName: item.category.category
+          },
+          price: item.price,
+          stock: item.stock
         }
-      )) 
+      ))
       return res.status(200).json(serialaizerProducts)
     }
   } catch (error) {
@@ -67,8 +67,7 @@ router.get('/:id', async (req, res, next) => {
       },
       price: foundProduct.price,
       stock: foundProduct.stock
-
-   }
+    }
     return res.status(200).json(serialaizer);
   } catch (error) {
     return res.status(404).send(error.message)

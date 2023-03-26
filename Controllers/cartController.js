@@ -22,6 +22,27 @@ const addNewOrder = async (cart) => {
     } catch (error) {
         return error.message;
     }
-}
+};
 
-module.exports = { addProductToCart, addNewOrder }
+const getAllCarts = async () => {
+    try {
+        const carts = await Cart.find().populate('user')
+        if (!carts.length)
+            throw new Error("No se encontraron carritos en la base de datos")
+        return carts
+    } catch (error) {
+        return error.message;
+    }
+};
+
+const getCartByUser = async (user) => {
+    try {
+        const cartsByUser = await Cart.find({ user: user })
+        if (!cartsByUser.length) throw new Error('No hay carritos asociados a ese usuario');
+        return cartsByUser;
+    } catch (error) {
+        return error.message;
+    }
+};
+
+module.exports = { addProductToCart, addNewOrder, getAllCarts, getCartByUser }
