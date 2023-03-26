@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const productSchema = new Schema({
     descriptionName: {
@@ -22,7 +22,7 @@ const productSchema = new Schema({
     stock: Number
 });
 
-// productSchema.plugin(softDeletePlugin);
+productSchema.plugin(softDeletePlugin);
 
 const Product = mongoose.model('Product', productSchema);
 
