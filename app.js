@@ -7,7 +7,7 @@ const cors = require('cors');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const cartRouter = require('./routes/carts');
-
+const orderRouter = require('./routes/orders');
 const app = express();
 
 app.use(cors());
@@ -21,5 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/carts', cartRouter);
+app.use('/orders', orderRouter);
 
 module.exports = app;
