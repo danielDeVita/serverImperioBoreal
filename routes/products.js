@@ -3,7 +3,6 @@ const router = express.Router();
 const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName, getProductCategories } = require('../Controllers/productController')
 const fileUpload = require('express-fileupload');
 
-/* GET home page. */
 
 router.get('/categories', async (req, res, next) => {
   try {
@@ -97,4 +96,5 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 
-module.exports = router;
+module.exports = router 
+
