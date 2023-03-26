@@ -3,12 +3,12 @@ const Order = require('../models/Order');
 
 const addProductToCart = async (cart) => {
     try {
-        if (!cart.user || !cart.products) throw new Error("Falta información sobre la compra");
+        if (!cart.user || !cart.products || !cart?.products?.length || !cart.totalAmount) throw new Error("Falta información sobre la compra");
         const newCart = new Cart(cart)
         await newCart.save(newCart)
         return newCart
     } catch (error) {
-        return error.message;
+        throw new Error(error.message);
     }
 };
 const addNewOrder = async (cart) => {
@@ -20,7 +20,7 @@ const addNewOrder = async (cart) => {
         const savedOrder = await newOrder.save()
         return savedOrder
     } catch (error) {
-        return error.message;
+        throw new Error(error.message);
     }
 };
 
