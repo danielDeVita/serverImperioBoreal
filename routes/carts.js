@@ -4,16 +4,12 @@ const { addProductToCart, addNewOrder, getAllCarts, getCartByUser } = require(".
 
 router.post("/", async (req, res) => {
     try {
-        const newCart = await addProductToCart(req.body)
-        if (newCart.error) throw new Error(newCart.error);
-        if (newCart) {
-            const newOrder = await addNewOrder(newCart)
-            if (newOrder.error) throw new Error(newOrder.error);
-            return newOrder
-        }
+        const { user, products, totalAmount } = req.body
+        const newCart = await addProductToCart({ user, products, totalAmount }) 
+        const newOrder = await addNewOrder(newCart)
         return res.status(201).json({ newCart, newOrder });
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).send(error.message);
     }
 });
 
