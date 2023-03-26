@@ -18,7 +18,7 @@ const addNewOrder = async (cart) => {
             cart: cart._id,
         })
         const savedOrder = await newOrder.save()
-        return newOrder
+        return savedOrder
     } catch (error) {
         return error.message;
     }
