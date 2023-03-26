@@ -7,7 +7,28 @@ router.get('/', async (req, res, next) => {
     try {
         const allOrders = await getAllOrders();
         if(allOrders.error) throw new Error(allOrders.error)
-        return res.status(200).json(allOrders)
+        const serializedOrders = allOrders.map((item) => (
+        {
+            orderId: item._id,
+            user: {
+                _id: item.user._id,
+                email: item.user.email,
+            },
+            status: item.status,
+            cart: {
+                products: item.cart.products.map( ({product, quantity}) => (
+                    {
+                        image: product.image.secure_url,
+                        descriptionName: product.descriptionName,
+                        price: product.price,
+                        quantity
+                    }
+                    )),
+                totalAmount: item.cart.totalAmount    
+            }
+        }
+        ))
+        return res.status(200).json(serializedOrders)
     } catch (error) {
       return res.status(404).send(error.message)
     }
@@ -20,7 +41,28 @@ router.get('/user/:userId', async (req, res, next) => {
         if(isValid) {
         const userOrders = await getOrderByUserId(userId)
         if(userOrders.error) throw new Error(userOrders.error)
-        return res.status(200).json(userOrders)
+        const serializedOrders = userOrders.map((item) => (
+            {
+                orderId: item._id,
+                user: {
+                    _id: item.user._id,
+                    email: item.user.email,
+                },
+                status: item.status,
+                cart: {
+                    products: item.cart.products.map( ({product, quantity}) => (
+                        {
+                            image: product.image.secure_url,
+                            descriptionName: product.descriptionName,
+                            price: product.price,
+                            quantity
+                        }
+                        )),
+                    totalAmount: item.cart.totalAmount    
+                }
+            }
+            ))
+        return res.status(200).json(serializedOrders)
         }
         throw new Error('Ingrese un id válido')
     } catch (error) {
