@@ -45,9 +45,15 @@ const getUserByMail = async (email) => {
     }
 }
 
-const updateUser = async (id, username, password, email) => {
+const updateUser = async (id, username, password, email, userRole) => {
     try {
-        const userToUpdate = await User.findByIdAndUpdate(id, { username, password, email }, { new: true })
+        let isAdmin
+        if(userRole === "admin"){
+            isAdmin = true
+        } else {
+            isAdmin = false
+        }
+        const userToUpdate = await User.findByIdAndUpdate(id, { username, password, email, isAdmin }, { new: true })
         return userToUpdate
     } catch (error) {
         return error.message;
