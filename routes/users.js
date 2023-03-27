@@ -46,8 +46,8 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { username, password, email } = req.body
-    const userToUpdate = await updateUser(id, username, password, email);
+    const { username, password, email, userRole } = req.body
+    const userToUpdate = await updateUser(id, username, password, email, userRole);
     if (userToUpdate.error) throw new Error(userToUpdate.error);
     return res.status(201).json(userToUpdate);
   } catch (error) {
