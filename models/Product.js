@@ -19,7 +19,7 @@ const productSchema = new Schema({
         public_id: String,
         secure_url: String
     },
-    stock: Number
+    stock: Number,
 });
 
 productSchema.plugin(softDeletePlugin);
