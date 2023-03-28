@@ -12,11 +12,11 @@ const getAllReviews = async () => {
     }
 }
 
-const createReview = async (userId, product, rating, comment) => {
+const createReview = async (userId, productId, rating, comment) => {
     try {
         const newReview = await Review.create({
             userId,
-            product,
+            product: productId,
             rating,
             comment,
         })
