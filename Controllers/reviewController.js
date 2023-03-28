@@ -40,6 +40,17 @@ const getReviewsByProduct = async (product) => {
         return error.message
     }
 } 
+const getReviewsByUser = async (userId) => {
+    try {
+        const foundReviews = await Review.find({userId: userId})
+        .populate('userId')
+        .populate('product')
+        if(!foundReviews) throw new Error('Este usuario aún no ha escrito reseñas') 
+        return foundReviews
+    } catch (error) {
+        return error.message
+    }
+}
 
 const updateReview = async (reviewId, userId, product, rating, comment) => {
     try {
@@ -71,5 +82,6 @@ module.exports = {
     createReview,
     getReviewsByProduct,
     updateReview,
-    deleteReview
+    deleteReview,
+    getReviewsByUser
 }
