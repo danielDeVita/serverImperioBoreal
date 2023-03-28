@@ -36,9 +36,10 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try {
-        const { userId, product, rating, comment } = req.body
-        if(!userId || !product || !rating) throw new Error('Se necesita mas información para crear la reseña')
-        const savedReview = await createReview(userId, product, rating, comment)
+        console.log(req.body)
+        const { userId, productId, rating, comment } = req.body
+        if(!userId || !productId || !rating) throw new Error('Se necesita mas información para crear la reseña')
+        const savedReview = await createReview(userId, productId, rating, comment)
         if(savedReview.error) throw new Error(savedReview.error)
         return res.status(201).json(savedReview)
     } catch (error) {
