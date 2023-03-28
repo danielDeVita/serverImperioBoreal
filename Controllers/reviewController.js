@@ -41,10 +41,35 @@ const getReviewsByProduct = async (product) => {
     }
 } 
 
+const updateReview = async (reviewId, userId, product, rating, comment) => {
+    try {
+        const reviewToUpdate = await Review.findById(reviewId)
+        if(rating !== reviewToUpdate.rating) reviewToUpdate.rating = rating;
+        if(comment !== reviewToUpdate.comment) {
+            comment.trim();
+            reviewToUpdate.comment = comment;  
+        } 
+        const newReview = await reviewToUpdate.save();
+        return newReview
+    } catch (error) {
+        return error.message
+    }
+}
+
+const deleteReview = async (reviewId) => {
+    try {
+        const deletedReview = Review.softDelete({_id: reviewId})
+        return deletedReview
+    } catch (error) {
+        return error.message
+    }
+}
 
 
 module.exports = {
     getAllReviews,
     createReview,
-    getReviewsByProduct
+    getReviewsByProduct,
+    updateReview,
+    deleteReview
 }
