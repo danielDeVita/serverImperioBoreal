@@ -7,7 +7,27 @@ router.get('/', async (req, res, next) => {
     try {
         const allReviews = await getAllReviews();
         if(allReviews.error) throw new Error(allReviews.error)
-        return res.status(200).json(allReviews)
+        const serializedReviews = allReviews.map((item) => {
+        return ({
+            _id: item._id,
+            // si queremos que sea user en lugar de userId hay que vaciar la DB para que no devuelva null
+            userId: {
+                _id:item.userId._id,
+                email: item.userId.email,
+                isAdmin: item.userId.isAdmin,
+                isDeleted: item.userId.isDeleted   
+            },
+            product: item.product ?
+                {
+                _id: item.product._id,
+                descriptionName: item.product.descriptionName
+                } :  'El producto ya no existe',
+            rating: item.product ?  item.rating : 'El producto ya no existe',
+            comment: item.product ? item.comment : 'El producto ya no existe',
+            createdAt: item.createdAt
+            }
+        )})
+        return res.status(200).json(serializedReviews)
         } catch (error) {
         console.log(error.message)
         return res.status(404).send(error.message)
@@ -33,7 +53,27 @@ router.get('/:productId', async (req, res, next) => {
         if(isValid) {
             const foundReviews = await getReviewsByProduct(productId)
             if(foundReviews.error) throw new Error(foundReviews.error)
-           return res.status(200).json(foundReviews);
+            const serializedReviews = foundReviews.map((item) => {
+                return ({
+                    _id: item._id,
+                    // si queremos que sea user en lugar de userId hay que vaciar la DB para que no devuelva null
+                    userId: {
+                        _id:item.userId._id,
+                        email: item.userId.email,
+                        isAdmin: item.userId.isAdmin,
+                        isDeleted: item.userId.isDeleted   
+                    },
+                    product: item.product ?
+                        {
+                        _id: item.product._id,
+                        descriptionName: item.product.descriptionName
+                        } :  'El producto ya no existe',
+                    rating: item.product ?  item.rating : 'El producto ya no existe',
+                    comment: item.product ? item.comment : 'El producto ya no existe',
+                    createdAt: item.createdAt
+                    }
+                )})
+            return res.status(200).json(serializedReviews)
         }
        return res.status(400).send('Ingrese un id válido')
     } catch (error) {
@@ -70,8 +110,5 @@ router.delete ('/:reviewId', async (req, res, next) => {
         return res.status(400).send(error.message)
     }
 })
-
-
-
 
 module.exports = router;

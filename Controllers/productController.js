@@ -67,6 +67,7 @@ const deleteProduct = async (id) => {
     try {
         const productToGetPublicID = await Product.findById(id)
         const productToDelete = await Product.softDelete({ _id: id });
+        // deleteMany reviews ?
         await deleteImage(productToGetPublicID.image.public_id);
         return productToDelete
     } catch (error) {
