@@ -20,15 +20,6 @@ const productSchema = new Schema({
         secure_url: String
     },
     stock: Number,
-    rating: {
-        type: Number,
-        min: 1,
-        max: 5,
-    },
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Review',
-    }]
 });
 
 productSchema.plugin(softDeletePlugin);

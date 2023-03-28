@@ -22,11 +22,11 @@ const reviewSchema = new Schema({
     comment: {
         type: String,   
     },
-},    
-    {
-    timestamps: true
-    }
-)
+    createdAt: {
+        type: String,
+        default: new Date().toLocaleDateString()
+    },
+})
 
 reviewSchema.plugin(softDeletePlugin);
 const Review = mongoose.model('Review', reviewSchema);

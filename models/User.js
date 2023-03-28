@@ -19,10 +19,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Review'
-    }] 
 });
 
 userSchema.plugin(softDeletePlugin);
