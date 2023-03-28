@@ -2,6 +2,8 @@ const fs = require('fs-extra');
 const { uploadImage, deleteImage } = require('../cloudinary');
 const Product = require('../models/Product')
 const Category = require('../models/Category')
+const Review = require('../models/Review')
+const Order = require('../models/Order')
 
 const getProducts = async () => {
     try {
@@ -65,11 +67,9 @@ const updateProduct = async (id, descriptionName, category, price, stock) => {
 }
 const deleteProduct = async (id) => {
     try {
-        const productToGetPublicID = await Product.findById(id)
-        const productToDelete = await Product.softDelete({ _id: id });
-        // deleteMany reviews ?
-        await deleteImage(productToGetPublicID.image.public_id);
-        return productToDelete
+        const deletedProduct = await Product.findByIdAndUpdate(id, {stock: 0}, {new: true})
+        await deleteImage(deletedProduct.image.public_id);
+        return deletedProduct
     } catch (error) {
         return error.message;
     }

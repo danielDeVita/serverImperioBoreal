@@ -22,20 +22,23 @@ router.get('/', async (req, res, next) => {
     } else {
       const products = await getProducts();
       if (products.error) throw new Error(products.error);
-      const serialaizerProducts = products?.map((item) => (
+      const serialaizerProducts = products?.map((item) => {
+        return( 
         {
-          image: item.image,
-          _id: item._id,
-          descriptionName: item.descriptionName,
-          category: {
-            _id: item?.category?._id,
-            categoryName: item.category.category
-          },
-          price: item.price,
-          stock: item.stock
-        }
-      ))
-      return res.status(200).json(serialaizerProducts)
+        image: item.image,
+        _id: item._id,
+        descriptionName: item.descriptionName,
+        category: {
+          _id: item?.category?._id,
+          categoryName: item.category.category
+        },
+        price: item.price,
+        stock: item.stock 
+      })
+      })  
+      const productsWithStock = serialaizerProducts.filter((item) => item.stock > 0)
+
+      return res.status(200).json(productsWithStock)
     }
   } catch (error) {
     return res.status(400).send(error.message);

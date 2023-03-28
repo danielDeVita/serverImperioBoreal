@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
-const {getAllReviews, createReview, getReviewsByProduct, updateReview, deleteReview} = require('../Controllers/reviewController')
+const {getAllReviews, createReview, getReviewsByProduct, updateReview, deleteReview, getReviewsByUser} = require('../Controllers/reviewController')
 
 router.get('/', async (req, res, next) => {
     try {
@@ -106,6 +106,21 @@ router.delete ('/:reviewId', async (req, res, next) => {
             if(deletedReview.error) throw new Error (deletedReview.error)
             return res.status(200).json(deletedReview)
          }
+    } catch (error) {
+        return res.status(400).send(error.message)
+    }
+})
+
+router.get('/user/:userId', async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const isValid = mongoose.isValidObjectId(userId)
+        if(isValid) {
+        const foundReviews = await getReviewsByUser(userId)
+        if(foundReviews.error) throw new Error (foundReviews.error)
+        return res.status(200).json(foundReviews)
+        }
+        return res.status(400).send('Ingrese un id válido')
     } catch (error) {
         return res.status(400).send(error.message)
     }
