@@ -35,8 +35,8 @@ router.get('/id/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const { email } = req.body
-    const newUser = await postNewUser(email);
+    const { email, username } = req.body
+    const newUser = await postNewUser(email, username);
     return res.status(201).json(newUser)
   } catch (error) {
     return res.status(400).send(error)

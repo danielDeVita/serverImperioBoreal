@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const main = require('../utils')
 
 const getUsers = async () => {
     try {
@@ -10,7 +11,7 @@ const getUsers = async () => {
     }
 }
 
-const postNewUser = async (email) => {
+const postNewUser = async (email, username) => {
     try {
         const foundUser = await User.findOne({ email })
         if (foundUser) return foundUser;
@@ -18,6 +19,7 @@ const postNewUser = async (email) => {
             email,
             username: email
         })
+        await main(email, username)
         const savedUser = await newUser.save();
         return savedUser
     } catch (error) {
