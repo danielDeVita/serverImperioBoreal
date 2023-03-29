@@ -11,7 +11,7 @@ const getUsers = async () => {
     }
 }
 
-const postNewUser = async (email, username) => {
+const postNewUser = async (email, nickname) => {
     try {
         const foundUser = await User.findOne({ email })
         if (foundUser) return foundUser;
@@ -19,7 +19,7 @@ const postNewUser = async (email, username) => {
             email,
             username: email
         })
-        await main(email, username)
+        await main(email, nickname)
         const savedUser = await newUser.save();
         return savedUser
     } catch (error) {
