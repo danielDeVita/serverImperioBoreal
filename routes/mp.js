@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
 
     let preference = {
         back_urls: {
-            success: "http://localhost:3001/mp/ok",
+            success: "http://localhost:5173/",
             pending: "",
             failure: ""
         },
@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
                 curreny_id: "ARS"
             },
         ],
-        notification_url: ""
+        //notification_url: "http://www.google.com",
     };
 
     mercadopago.preferences
@@ -35,11 +35,14 @@ router.get('/', async (req, res, next) => {
         .catch(function (error) {
             console.log(error);
         });
-
 })
 
-router.get('/ok', async(req, res, next)=>{
+router.get('/ok', async (req, res, next) => {
     res.send('ok')
+})
+
+router.get("/notification", async (req, res, next) => {
+    res.send('notific')
 })
 
 module.exports = router
