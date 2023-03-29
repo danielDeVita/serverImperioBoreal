@@ -18,7 +18,7 @@ async function main(email, username) {
         from: process.env.ADMIN_EMAIL,
         to: email,
         subject: 'Hola 😁',
-        html: `<h1>Bienvenido ${username || 'Pepe'} a la mejor Librería 🎉</h1>`
+        html: username ? `<h1>Bienvenido/a ${username} a la mejor Librería 🎉</h1>` : '<h1>Bienvenido/a a la mejor Librería 🎉</h1>'
     }
 
     transporter.sendMail(mailOptions, (err, data) => {
