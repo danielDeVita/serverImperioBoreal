@@ -59,4 +59,8 @@ router.get('/payment-status', (req, res) => {
         });
 });
 
+router.get("/notification", async (req, res, next) => {
+    res.send('notific')
+})
+
 module.exports = router
