@@ -37,7 +37,7 @@ const getReviewsByProduct = async (product) => {
         if(!foundReviews.length) throw new Error('No se encontraron reviews de este producto.')
         return foundReviews
     } catch (error) {
-        return error.message
+        throw new Error(error.message)
     }
 } 
 const getReviewsByUser = async (userId) => {

@@ -53,7 +53,6 @@ router.get('/:productId', async (req, res, next) => {
         const isValid = mongoose.isValidObjectId(productId)
         if(isValid) {
             const foundReviews = await getReviewsByProduct(productId)
-            if(foundReviews.error) throw new Error(foundReviews.error)
             const serializedReviews = foundReviews.map((item) => {
                 return ({
                     _id: item._id,
