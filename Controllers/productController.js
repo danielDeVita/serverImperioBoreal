@@ -7,7 +7,9 @@ const Order = require('../models/Order')
 
 const getProducts = async () => {
     try {
-        const products = await Product.find().populate('category')
+        const products = await Product.find({stock: {
+            $gt: 0
+        }}).populate('category')
         if (!products.length)
             throw new Error("No se encontraron productos en la base de datos")
         return products;
