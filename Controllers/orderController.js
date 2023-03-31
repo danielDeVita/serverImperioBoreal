@@ -49,7 +49,7 @@ const setOrderStatus = async (orderId, newStatus) => {
         const foundOrder = Order.findByIdAndUpdate(orderId, {status: newStatus}, { new: true })
         return foundOrder
     } catch (error) {
-        return error.message
+       return error
     }
 }
 
@@ -58,6 +58,7 @@ const deleteOrder = async (orderId) => {
         const orderToDelete = await Order.findByIdAndUpdate(orderId, {isDeleted: true}, {new: true})
         return orderToDelete
     } catch (error) {
+        
         return error.message
     }
 }

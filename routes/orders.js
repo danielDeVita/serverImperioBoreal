@@ -73,10 +73,10 @@ router.get('/user/:userId', async (req, res, next) => {
 router.put('/:orderId', async (req, res, next) => {
     try {
         const { orderId } = req.params;
-        const { status } = req.body;
+        const { putStatus } = req.body;
         const isValid = mongoose.isValidObjectId(orderId)
         if(isValid) {
-        await setOrderStatus(orderId, status)
+        await setOrderStatus(orderId, putStatus)
         if(setOrderStatus.error) throw new Error(setOrderStatus.error)
         return res.status(200).json('Estado de orden de compra actualizada')
         }

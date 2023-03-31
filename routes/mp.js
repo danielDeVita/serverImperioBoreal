@@ -31,7 +31,6 @@ router.post('/', async (req, res, next) => {
             return res.send(response.body.init_point)
         })
         .catch(function (error) {
-            console.log(error);
            return res.status(400).json(error.message);
         })
 });
@@ -41,7 +40,6 @@ router.get('/payment-status', (req, res) => {
     mercadopago.payment
         .get(payment_id)
         .then((response) => {
-            console.log(response.body)
             const { status } = response.body;
             if (status === 'approved') {
                 return res.send({ message: 'Compra aprobada' });
