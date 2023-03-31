@@ -7,7 +7,7 @@ async function main(email, username) {
         auth: {
             type: 'OAuth2',
             user: process.env.ADMIN_EMAIL,
-            pass: process.env.PASSWORD_EMAIl,
+            pass: process.env.PASSWORD_EMAIL,
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.SECRET_ID,
             refreshToken: process.env.REFRESH_TOKEN

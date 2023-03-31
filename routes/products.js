@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { getProducts, postNewProduct, getProductById, updateProduct, deleteProduct, getProductByName, getProductCategories } = require('../Controllers/productController')
 const fileUpload = require('express-fileupload');
+const Product = require('../models/Product');
+const Category=require('../models/Category');
 
 
 router.get('/categories', async (req, res, next) => {
@@ -41,6 +43,7 @@ router.get('/', async (req, res, next) => {
       return res.status(200).json(productsWithStock)
     }
   } catch (error) {
+    console.log(error.message)
     return res.status(400).send(error.message);
   }
 });
@@ -90,8 +93,18 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
+    const {categoryId} = req.query;
     const { id } = req.params;
     const productToDelete = await deleteProduct(id)
+    const productsWithCategory = await Product.countDocuments({
+      category: {
+        _id:categoryId
+      },
+      stock: {
+        $gt:0
+      }
+    })
+    if(productsWithCategory === 0) await Category.softDelete({ _id: categoryId })
     return res.status(200).json(productToDelete)
   } catch (error) {
     return res.status(400).send(error.message);
