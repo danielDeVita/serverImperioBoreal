@@ -7,7 +7,7 @@ router.post("/", async (req, res) => {
         const { user, products, totalAmount } = req.body
         const newCart = await addProductToCart({ user, products, totalAmount }) 
         const newOrder = await addNewOrder(newCart)
-        return res.status(201).json({ newCart, newOrder });
+        return res.status(201).json(newOrder._id);
     } catch (error) {
         return res.status(400).send(error.message);
     }

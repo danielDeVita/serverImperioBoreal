@@ -8,13 +8,15 @@ mercadopago.configure({
 });
 
 router.post('/', async (req, res, next) => {
-    const { products } = req.body
+    const { products, totalAmount } = req.body
     let preference = {
         items: products.map((product) => {
             return ({
-                title: product.description,
-                unit_price: product.transaction_amount,
+                title: product.title,
+                unit_price: product.unit_price,
                 quantity: Number(product.quantity),
+                currency_id: 'ARS',
+                picture_url: product.picture_url
             })
         }),
         back_urls: {
@@ -26,11 +28,10 @@ router.post('/', async (req, res, next) => {
     mercadopago.preferences
         .create(preference)
         .then(function (response) {
-            res.send(response.body.init_point)
+            return res.send(response.body.init_point)
         })
         .catch(function (error) {
-            console.log(error);
-            res.status(400).json(error.message);
+           return res.status(400).json(error.message);
         })
 });
 
@@ -39,7 +40,6 @@ router.get('/payment-status', (req, res) => {
     mercadopago.payment
         .get(payment_id)
         .then((response) => {
-            console.log(response.body)
             const { status } = response.body;
             if (status === 'approved') {
                 return res.send({ message: 'Compra aprobada' });
@@ -56,5 +56,9 @@ router.get('/payment-status', (req, res) => {
             return res.status(500).send({ error: 'Ha ocurrido un error' });
         });
 });
+
+router.get("/notification", async (req, res, next) => {
+    res.send('notific')
+})
 
 module.exports = router
