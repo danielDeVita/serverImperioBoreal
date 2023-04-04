@@ -13,8 +13,8 @@ router.get('/', async (req, res, next) => {
         {
             orderId: item._id,
             user: {
-                _id: item.user._id,
-                email: item.user.email,
+                _id: item.user?._id ? item.user?._id : 'Usuario eliminado',
+                email: item.user?.email ? item.user?.email : 'Usuario eliminado'
             },
             status: item.status,
             cart: {

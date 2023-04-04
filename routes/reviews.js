@@ -12,10 +12,10 @@ router.get('/', async (req, res, next) => {
             _id: item._id,
             // si queremos que sea user en lugar de userId hay que vaciar la DB para que no devuelva null
             userId: {
-                _id:item.userId._id,
-                email: item.userId.email,
-                isAdmin: item.userId.isAdmin,
-                isDeleted: item.userId.isDeleted   
+                _id:item.userId?._id ? item.userId?._id : 'Usuario eliminado',
+                email: item.userId?.email ? item.userId?.email : 'Usuario eliminado',
+                isAdmin: item.userId?.isAdmin ? item.userId?.isAdmin : 'Usuario eliminado',
+                isDeleted: item.userId?.isDeleted   ? item.userId?.isDeleted : 'Usuario eliminado'
             },
             product: item.product ?
                 {
@@ -58,10 +58,10 @@ router.get('/:productId', async (req, res, next) => {
                     _id: item._id,
                     // si queremos que sea user en lugar de userId hay que vaciar la DB para que no devuelva null
                     userId: {
-                        _id:item.userId._id,
-                        email: item.userId.email,
-                        isAdmin: item.userId.isAdmin,
-                        isDeleted: item.userId.isDeleted   
+                        _id:item.userId?._id ? item.userId?._id : 'Usuario eliminado',
+                        email: item.userId?.email ? item.userId?.email : 'Usuario eliminado',
+                        isAdmin: item.userId?.isAdmin ? item.userId?.isAdmin : 'Usuario eliminado',
+                        isDeleted: item.userId?.isDeleted ? item.userId?.isDeleted : 'Usuario eliminado'  
                     },
                     product: item.product ?
                         {
@@ -77,6 +77,7 @@ router.get('/:productId', async (req, res, next) => {
         }
        return res.status(400).send('Ingrese un id válido')
     } catch (error) {
+        console.log(error.message)
         return res.status(400).send(error.message)
     }
 })
