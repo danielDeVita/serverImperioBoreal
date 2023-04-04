@@ -48,12 +48,12 @@ router.get('/payment-status', (req, res) => {
             } else if (status === 'in_process') {
                 return res.send({ message: 'Compra pendiente' });
             } else {
-                return res.status(500).send({ error: 'Sin información del estado de compra' });
+                return res.status(500).send({ message: null });
             }
         })
         .catch((error) => {
             console.error(error);
-            return res.status(500).send({ error: 'Ha ocurrido un error' });
+            return res.status(500).send({ message: null });
         });
 });
 

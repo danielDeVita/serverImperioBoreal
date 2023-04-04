@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
         descriptionName: item.descriptionName,
         category: {
           _id: item?.category?._id,
-          categoryName: item.category.category
+          categoryName: item.category?.category
         },
         price: item.price,
         stock: item.stock 
@@ -67,8 +67,8 @@ router.get('/:id', async (req, res, next) => {
       _id: foundProduct._id,
       descriptionName: foundProduct.descriptionName,
       category: {
-        _id: foundProduct.category._id,
-        categoryName: foundProduct.category.category
+        _id: foundProduct.category?._id,
+        categoryName: foundProduct.category?.category
       },
       price: foundProduct.price,
       stock: foundProduct.stock
